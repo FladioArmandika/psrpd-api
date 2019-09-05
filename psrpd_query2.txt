@@ -1,0 +1,232 @@
+
+
+CREATE DATABASE psrpd;
+
+CREATE TABLE pegawai(
+	id_pegawai INT PRIMARY KEY AUTO_INCREMENT,
+	nip VARCHAR(50),
+	password VARCHAR(50),
+	nama_pegawai VARCHAR(255),
+	img_profile INT,
+    created_at DATE,
+    updated_at DATE,
+);
+
+
+
+CREATE TABLE konversi_nip(
+	id_konversi_nip	 INT PRIMARY KEY AUTO_INCREMENT,
+	id_pegawai INT,
+	img_konversi_nip VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+	FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION,
+);
+
+CREATE TABLE cpns(
+	id_cpns INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_lamaran VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION,
+);
+CREATE TABLE pns(
+    id_pns INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_ba_sumpah VARCHAR(100),
+    img_penambahan_masa_kerja VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+	CREATE TABLE nota_persetujuan_bkn(
+        id_nota_persetujuan_bkn INT PRIMARY KEY AUTO_INCREMENT,
+        id_cpns INT,
+        id_pns INT,
+        img_nota_persetujuan_bkn VARCHAR(100),
+        created_at DATE,
+        updated_at DATE,
+
+        FOREIGN KEY (id_cpns) REFERENCES cpns(id_cpns)
+	    ON UPDATE CASCADE ON DELETE NO ACTION,
+        FOREIGN KEY (id_pns) REFERENCES pns(id_pns)
+	    ON UPDATE CASCADE ON DELETE NO ACTION
+    );
+
+	CREATE TABLE surat_keputusan(
+        id_surat_keputusan INT PRIMARY KEY AUTO_INCREMENT,
+        id_cpns INT,
+        id_pns INT,
+        img_surat_keputusan VARCHAR(100),
+        created_at DATE,
+        updated_at DATE,
+
+        FOREIGN KEY (id_cpns) REFERENCES cpns(id_cpns)
+	    ON UPDATE CASCADE ON DELETE NO ACTION,
+        FOREIGN KEY (id_pns) REFERENCES pns(id_pns)
+	    ON UPDATE CASCADE ON DELETE NO ACTION
+    );
+
+CREATE TABLE diklat_teknis(
+    id_diklat_teknis INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_diklat_teknis VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE diklat_struktural(
+    id_diklat_struktural INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_diklat_struktural VARCHAR(100),
+    kategori ENUM('PRAJABATAN','DIKLATPIM IV',
+    'DIKLATPIM III', 'DIKLATPIM II', 'DIKLATPIM I'),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE diklat_fungsional(
+    id_diklat_fungsional INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_diklat_teknis VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+CREATE TABLE kepangkatan(
+    id_kepangkatan INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    golongan ENUM('I.a','I.b','I.c','I.d','II.a',
+    'II.b','II.c','II.d','III.a','III.b','III.c',
+    'III.d','IV.a','IV.b','IV.c','IV.d','IV.e'),
+    img_kepangkatan VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+-- dawdkawodkoawkdkwoaodkokawodkowakod
+CREATE TABLE alih_tugas_jabatan(
+    id_alih_tugas_jabatan INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_alih_tugas_jabatan VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE penilaian_kerja(
+    id_penilaian_kerja INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_penilaian_kerja VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE hukuman(
+    id_hukuman INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    jenis ENUM('ringan','sedang','berat'),
+    img_hukuman VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE pendidikan_umum(
+    id_pendidikan_umum INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    tingkat ENUM('SD','SLTP','SLTA','D1','D2','D3',
+    'D4','S1','S2','S3'),
+    img_pendidikan_umum VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE penghargaan(
+    id_penghargaan INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    jenis ENUM('walikota-bupati','gubernur','presiden'),
+    img_penghargaan VARCHAR(100),
+    tahun INT,
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+
+);
+CREATE TABLE sertifikat(
+    id_sertifikat INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    jenis ENUM('sertifikasi','seminar'),
+    img_sertifikat VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE gaji(
+    id_gaji INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    jenis ENUM('berkala','infasing'),
+    tanggal DATE,
+    img_gaji VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+CREATE TABLE data_diri(
+    id_data_diri INT PRIMARY KEY AUTO_INCREMENT,
+    id_pegawai INT,
+    img_ktp VARCHAR(100),
+    img_karpeg VARCHAR(100),
+    img_kpe VARCHAR(100),
+    img_npwp VARCHAR(100),
+    img_akta_nikah VARCHAR(100),
+    img_akta_cerai VARCHAR(100),
+    img_kelahiran VARCHAR(100),
+    img_akta_kematian VARCHAR(100),
+    img_askes_bpjs VARCHAR(100),
+    img_taspen VARCHAR(100),
+    img_drh_fip VARCHAR(100),
+    img_nuptk VARCHAR(100),
+    img_rekening VARCHAR(100),
+    img_cuti VARCHAR(100),
+    img_lainlain VARCHAR(100),
+    created_at DATE,
+    updated_at DATE,
+
+    FOREIGN KEY (id_pegawai) REFERENCES pegawai(id_pegawai)
+	ON UPDATE CASCADE ON DELETE NO ACTION
+);
+
+
+
+
+
