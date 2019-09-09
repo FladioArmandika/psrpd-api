@@ -14,11 +14,13 @@ class PegawaiController extends Controller {
 
     public function getAll() {
 
-        $img =  Storage::get('d.png');
-        $response = Response::make($img, 200);
-        $response->header('Content-Type', 'image/jpeg');
+        $listpegawai = Pegawai::all();
+        return Response::json($listpegawai);
+        // $img =  Storage::get('d.png');
+        // $response = Response::make($img, 200);
+        // $response->header('Content-Type', 'image/jpeg');
 
-        return $response;
+        // return $response;
     }
 
     public function addPegawai(Request $req) {

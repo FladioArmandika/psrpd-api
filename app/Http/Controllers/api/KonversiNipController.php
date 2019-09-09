@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 
-use App\Model\Cpns as Cpns;
+use App\Model\KonversiNip as KonversiNip;
 
-class CpnsController extends Controller {
+class KonversiNipController extends Controller {
 
     public function getAll($idpegawai) {
-        $cpns = Cpns::where('id_pegawai', $idpegawai)->firstOrFail();
-        return Response::json($cpns);
+        $result = KonversiNip::where('id_pegawai', $idpegawai)->firstOrFail();
+        return Response::json($result);
         // return "dawd";
     }
-
 }

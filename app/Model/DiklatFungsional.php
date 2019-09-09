@@ -13,3 +13,7 @@ class DiklatFungsional extends Model {
         'id_pegawai', 'img_diklat_teknis'
     ];
 }
+
+
+
+
