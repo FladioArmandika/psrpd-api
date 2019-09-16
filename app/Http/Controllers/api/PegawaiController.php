@@ -12,6 +12,13 @@ use App\Model\Pegawai as Pegawai;
 
 class PegawaiController extends Controller {
 
+    public function login(Request $req) {
+        $pegawai->username = $req->username;
+        $pegawai->password = $req->password;
+
+        return 1;
+    }
+
     public function getAll() {
 
         $listpegawai = Pegawai::all();
@@ -47,6 +54,17 @@ class PegawaiController extends Controller {
         $pegawai = Pegawai::where('nip', $idpegawai)->first();
 
         return Response::json($pegawai);
+    }
+
+    public function getImageProfile($idpegawai) {
+
+        $fileurl = Pegawai::find($idpegawai, ['img_profile']);
+
+        $img =  Storage::get($fileurl->img_profile);
+        $response = Response::make($img, 200);
+        $response->header('Content-Type', 'image/jpeg');
+
+        return $response;
     }
 
     public function deletePegawai($idpegawai) {
