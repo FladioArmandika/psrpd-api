@@ -16,4 +16,3 @@ class DiklatFungsional extends Model {
 
 
 
-
